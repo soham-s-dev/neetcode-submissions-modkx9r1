@@ -5,23 +5,23 @@ class Solution {
      * @return {boolean}
      */
     isNStraightHand(hand, groupSize) {
-        if(hand.length % groupSize !== 0) return false;
+        let map = hand.reduce((prev, curr) => {
+            prev[curr] = (prev[curr] || 0) + 1;
+            return prev;
+        }, {})
 
-        let map = {};
-        for(let card of hand) {
-            map[card] = (map[card] || 0) + 1;
-        }
-
+     
         hand.sort((a, b) => a - b);
 
-        for(let card of hand) {
-            if(map[card] > 0) {
-                for(let i = card; i < card + groupSize; i++) {
+        for(let h of hand) {
+           if(map[h] > 0) {
+                for(let i = h; i < h + groupSize; i++) {
                     if(!map[i]) return false;
                     map[i]--;
                 }
-            }
+           } 
         }
+
         return true;
     }
 }
